@@ -1,0 +1,17 @@
+# 忽略所有无后缀的文件（可执行文件）
+*[!.cpp]
+*[!.h]
+*[!.py]
+*[!.java]
+*[!.md]
+*[!.txt]
+!.gitignore
+
+# VS Code配置
+.vscode/
+*.code-workspace
+
+# 编译文件
+*.o
+*.exe
+*.out
