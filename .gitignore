@@ -9,6 +9,7 @@
 !*.java
 !*.md
 !*.txt
+!**/*cpp
 
 # VS Code
 .vscode/
