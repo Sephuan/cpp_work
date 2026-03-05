@@ -16,6 +16,7 @@ constexpr int MOD = 998'244'353;
 constexpr int mod = 1e9+7;
 constexpr int INF = 0x3f3f3f3f;
 
+const int PI = acos(-1);
 const int MAXN = 2'00'005;
 
 void init() {
@@ -31,7 +32,7 @@ signed main() {
     cin.tie(nullptr);
     init();
     int T = 1;
-    cin >> T;
+    //cin >> T;
     cout << fixed << setprecision(15);
     while (T--) {
         solve();
