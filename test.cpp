@@ -15,6 +15,8 @@ using namespace std;
 constexpr int MOD = 998'244'353;
 constexpr int mod = 1e9+7;
 constexpr int INF = 0x3f3f3f3f;
+constexpr int dx[] = {-1, 1, 0, 0};
+constexpr int dy[] = {0, 0, 1, -1};
 
 const double PI = acos(-1.0);
 const int MAXN = 2'00'005;
