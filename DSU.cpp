@@ -26,9 +26,11 @@ void init() {
 }
 
 struct DSU {
-    vector<int> fa;
-    DSU(int n) : fa(n + 1) {
+    vector<int> fa, sz;
+    int cnt;
+    DSU(int n) : fa(n + 1), sz(n + 1, 1) {
         iota(fa.begin(), fa.end(), 0);
+        cnt = n;
     }
     int find(int x) {
         return fa[x] == x ? x : fa[x] = find(fa[x]);
@@ -36,7 +38,10 @@ struct DSU {
     void unite(int x, int y) {
         x = find(x), y =find(y);
         if (x != y) {
+            if (sz[x] < sz[y]) swap(x, y);
             fa[y] = x;
+            sz[x] += sz[y];
+            cnt --;
         }
     }
     bool same(int x, int y) {
