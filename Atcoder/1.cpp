@@ -13,6 +13,7 @@ using namespace std;
 //#define int long long
 //#define int unsigned long long
 constexpr int MOD = 998'244'353;
+constexpr int MOD_P = MOD - 1;
 constexpr int mod = 1e9+7;
 constexpr int INF = 0x3f3f3f3f;
 
