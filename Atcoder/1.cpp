@@ -17,6 +17,9 @@ constexpr int MOD_P = MOD - 1;
 constexpr int mod = 1e9+7;
 constexpr int INF = 0x3f3f3f3f;
 constexpr ll LINF = 0x3f3f3f3f'3f3f3f3f;
+constexpr int dx[] = {-1, 1, 0, 0};
+constexpr int dy[] = {0, 0, 1, -1};
+
 const double PI = acos(-1.0);
 const int MAXN = 2'00'005;
 
