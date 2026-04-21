@@ -5,6 +5,7 @@ using namespace std;
 #define fi first
 #define se second
 #define pii pair<int, int>
+#define pll pair<long long, long long>
 #define endl '\n'
 #define rep(i, a, b) for (int i = (a); i < (b); ++i)
 #define rep1(i, a, b) for (int i = (a); i <= (b); ++i)
