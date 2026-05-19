@@ -30,7 +30,32 @@ void init() {
 }
 
 void solve() {
-
+    auto cal = [&](int a, int b) -> pii {
+        if (a == b) return {0, 0};
+        int f = 0;
+        int ra = 0, rb = 0;
+        if (a > b) {swap(a, b); f = 1;}
+        if (a == 0) {
+            if (b == 1 || b == 4) rb = 1;
+            else ra = 1;
+        } else if (a == 1) {
+            if (b == 2 || b == 4) rb = 1;
+            else ra = 1;
+        } else if (b == 3) rb = 1;
+        else ra = 1;
+        if (f) swap(ra, rb);
+        return {ra, rb};
+    };
+    int N, Na, Nb; cin >> N >> Na >> Nb;
+    vector<int> va(Na), vb(Nb);
+    rep(i, 0, Na) cin >> va[i];
+    rep(i, 0, Nb) cin >> vb[i];
+    int ans_a = 0, ans_b = 0;
+    rep(i, 0, N) {
+        auto [ra, rb] = cal(va[i % Na], vb[i % Nb]);
+        ans_a += ra, ans_b += rb;
+    }
+    cout << ans_a << ' ' << ans_b;
 }
 
 signed main() {
