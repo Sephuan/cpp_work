@@ -30,7 +30,31 @@ void init() {
 }
 
 void solve() {
-
+    int N, M; cin >> N >> M;
+    int g[11][11];
+    set<int> s;
+    memset(g, 0, sizeof g);
+    rep1(i, 1, M) {
+        int a, b, c; cin >> a >> b >> c;
+        g[a][b] = g[b][a] = c;
+    }
+    int ans = 0;
+    auto dfs = [&](auto& self, int idx, int cur) -> void {
+        ans = max(ans, cur);
+        rep1(j, 1, N) {
+            if (g[idx][j] && !s.count(j)) {
+                s.insert(j);
+                self(self, j, cur + g[idx][j]);
+                s.erase(j);
+            }
+        }
+    };
+    rep1(i, 1, N) {
+        s.clear();
+        s.insert(i);
+        dfs(dfs, i, 0);
+    }
+    cout << ans;
 }
 
 signed main() {
