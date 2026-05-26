@@ -31,27 +31,55 @@ void init() {
 
 void solve() {
     int n; cin >> n;
-    vector<int> a(n + 1);
-    unordered_map<int, int> mp;
-    set<int> s;
-    rep1(i, 1, n) {
+    vector<int> a(n);
+    vector pos(n + 1, vector<int>());
+    rep(i, 0, n) {
         cin >> a[i];
-        mp[a[i]] ++;
-        if (a[i] <= n) s.insert(a[i]);
+        pos[a[i]].push_back(i);
     }
-    int idx = 1;
-    vector<pii> res;
     rep1(i, 1, n) {
-        if (!mp.count(i)) {
-            while (mp[a[idx]] < 2 && a[idx] <= n) idx ++;
-            res.push_back({idx, i});
-            if (mp.count(a[idx])) mp[a[idx]] --;
-            idx ++;
+        if (pos[i].size() > 2) {
+            cout << -1;
+            return ;
         }
     }
-    cout << n - s.size() << endl;
-    for (auto& [i, x] : res) {
-        cout << i << ' ' << x << endl;
+    vector b(n, 0), c(n, 0);
+    vector vis_b(n + 1, false), vis_c(n + 1, false);
+    int cnt = 0;
+    rep1(i, 1, n) {
+        if (pos[i].size() == 2) {
+            int p1 = pos[i][0];
+            int p2 = pos[i][1];
+            b[p1] = i; vis_b[i] = true;
+            c[p2] = i; vis_c[i] = true;
+        } else if (pos[i].size() == 1) {
+            int p = pos[i][0];
+            if (cnt % 2 == 0) {
+                b[p] = i; vis_b[i] = true;
+            } else {
+                c[p] = i; vis_c[i] = true;
+            }
+            cnt ++;
+        }
+    }
+    vector<int> rb, rc;
+    rep1(i, 1, n) {
+        if (!vis_b[i]) rb.push_back(i);
+        if (!vis_c[i]) rc.push_back(i);
+    }
+    int pb = 0, pc = 0;
+    rep(i, 0, n) {
+        if (b[i] == 0) b[i] = rb[pb ++];
+        if (c[i] == 0) c[i] = rc[pc ++];
+    }
+    rep(i, 0, n) {
+        if (i) cout << ' ';
+        cout << b[i];
+    }
+    rep(i, 0, n) {
+        if (i) cout << ' ';
+        else cout << endl;
+        cout << c[i];
     }
 }
 
