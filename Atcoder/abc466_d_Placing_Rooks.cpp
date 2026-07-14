@@ -30,17 +30,22 @@ void init() {
 }
 
 void solve() {
-    int N, M; cin >> N >> M;
-    vector<int> R(M + 1), C(M + 1);
-    vector<int> SR(N + 1), SC(N + 1);
-    rep1(i, 1, M) cin >> R[i] >> C[i];
-    int ans = 0;
-    rrep(i, M, 1) {
-        if (!SR[R[i]] && !SC[C[i]]) ans ++;
-        SR[R[i]] = 1;
-        SC[C[i]] = 1;
+    int N, K; cin >> N >> K;
+    vector<ll> best(K + 1, 0), endHere(K + 1, -LINF);
+    ll sum = 0;
+    rep1(i, 1, N) {
+        ll A, B, C;
+        cin >> A >> B;
+        sum += A;
+        C = B - A;
+        rrep(j, K, 1) {
+            ll old_ = endHere[j] + C;
+            ll new_ = best[j - 1] + C;
+            endHere[j] = max(old_, new_);
+            best[j] = max(best[j], endHere[j]);
+        }
     }
-    cout << ans;
+    cout << sum + best[K];
 }
 
 signed main() {
