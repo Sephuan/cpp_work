@@ -46,7 +46,7 @@ void solve() {
         }
     }
     if (m == 0) {
-        ll fact =1;
+        ll fact = 1;
         rep1(i, 2, n) fact = fact * i % MOD;
         cout << fact;
         return ;
