@@ -29,40 +29,74 @@ void init() {
 
 }
 
+optional<string> build(
+    string s,
+    vector<int>& d,
+    bool down
+) {
+    int m = s.size();
+    vector<array<int, 2>> can(m + 1, array<int, 2>{0, 0});
+    can[m][0] = can[m][1] = 1;
+    auto legal = [&](int i, int tight, int x) {
+        if (i == 0 && m > 1 && x == 0) return false;
+        if (!tight) return true;
+        int cur = s[i] - '0';
+        return down ? x <= cur : x >= cur;
+    };
+    rrep(i, m - 1, 0) {
+        rep(tight, 0, 2) {
+            for (int x : d) {
+                if (!legal(i, tight, x)) continue;
+                int nt = tight && (x == s[i] - '0');
+                if (can[i + 1][nt]) {
+                    can[i][tight] = 1;
+                    break;
+                }
+            }
+        }
+    }
+    if (!can[0][1]) return nullopt;
+    vector<int> order = d;
+    if (down) reverse(order.begin(), order.end());
+    string res;
+    int tight = 1;
+    rep(i, 0, m) {
+        for (int x : order) {
+            if (!legal(i, tight, x)) continue;
+            int nt = tight && (x == s[i] - '0');
+            if (can[i + 1][nt]) {
+                res += char('0' + x);
+                tight = nt;
+                break;
+            }
+        }
+    }
+    return res;
+}
+
 void solve() {
-    ll a; int n; cin >> a >> n;
+    ull a; int n; cin >> a >> n;
     vector<int> d(n);
     for (int& x : d) cin >> x;
-    string s = to_string(a), pre;
+    string s = to_string(a);
     int m = s.size();
-    char mn = char('0' + d.front());
-    char mx = char('0' + d.back());
-    ll ans = LINF;
-    auto upd = [&](string t) {
-        ll b = stoll(t);
-        ans = min(ans, a > b ? a - b : b - a);
-    };
-    if (d.front() == 0) upd("0");
-    if (m > 1 && d.back() != 0)
-        upd(string(m - 1, mx));
-    auto nz = upper_bound(d.begin(), d.end(), 0);
-    if (nz != d.end())
-        upd(string(1, char('0' + *nz)) + string(m, mn));
-    rep(i, 0, m) {
-        int x = s[i] - '0';
-        auto p = lower_bound(d.begin(), d.end(), x);
-        if (p != d.begin()) {
-            int y = *prev(p);
-            if (!(i == 0 && m > 1 && y == 0))
-                upd(pre + char('0' + y) + string(m - i - 1, mx));
-        }
-        auto q = upper_bound(d.begin(), d.end(), x);
-        if (q != d.end())
-            upd(pre + char('0' + *q) + string(m - i - 1, mn));
-        if (p == d.end() || *p != x) break;
-        pre += s[i];
+    auto lower = build(s, d, true);
+    if (!lower && m > 1)
+        lower = build(string(m - 1, '9'), d, true);
+    if (!lower && d.front() == 0)
+        lower = "0";
+    auto upper = build(s, d, false);
+    if (!upper)
+        upper = build(string(m + 1, '0'), d, false);
+    ull ans = ULLONG_MAX;
+    if (lower) {
+        ull b = stoll(*lower);
+        ans = min(ans, a - b);
     }
-    if (pre == s) ans = 0;
+    if (upper) {
+        ull b = stoll(*upper);
+        ans = min(ans, b - a);
+    }
     cout << ans;
 }
 
