@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using ll = long long;
 using ull = unsigned long long;
+using lll = __int128;
 using namespace std;
 #define fi first
 #define se second
@@ -23,11 +24,90 @@ constexpr int dy[] = {0, 0, -1, 1};
 constexpr char dc[] = {'U', 'D', 'L', 'R'};
 
 const double PI = acos(-1.0);
-const int MAXN = 10'000'005;
+const int MAXN = 200'005;
+
+template <int MOD>
+struct ModInt {
+    int v;
+
+    ModInt() : v(0) {}
+    ModInt(__int128 _v) {
+        v = static_cast<int>(_v % MOD);
+        if (v < 0) v += MOD;
+    }
+
+    ModInt power(long long p) const {
+        ModInt res = 1, base = *this;
+        while (p > 0) {
+            if (p & 1) res *= base;
+            base *= base;
+            p >>= 1;
+        }
+        return res;
+    }
+
+    ModInt inv() const { return power(MOD - 2); }
+
+    ModInt& operator+=(const ModInt& o) {
+        v += o.v;
+        if (v >= MOD) v -= MOD;
+        return *this;
+    }
+    ModInt& operator-=(const ModInt& o) {
+        v -= o.v;
+        if (v < 0) v += MOD;
+        return *this;
+    }
+    ModInt& operator*=(const ModInt& o) {
+        v = static_cast<int>(1LL * v * o.v % MOD);
+        return *this;
+    }
+    ModInt& operator/=(const ModInt& o) {
+        return *this *= o.inv();
+    }
+
+    friend ModInt operator+(ModInt a, const ModInt& b) { return a += b; }
+    friend ModInt operator-(ModInt a, const ModInt& b) { return a -= b; }
+    friend ModInt operator*(ModInt a, const ModInt& b) { return a *= b; }
+    friend ModInt operator/(ModInt a, const ModInt& b) { return a /= b; }
+
+    bool operator==(const ModInt& o) const { return v == o.v; }
+    bool operator!=(const ModInt& o) const { return v != o.v; }
+
+    friend istream& operator>>(istream& is, ModInt& x) {
+        long long val;
+        is >> val;
+        x = ModInt(val);
+        return is;
+    }
+    friend ostream& operator<<(ostream& os, const ModInt& x) {
+        return os << x.v;
+    }
+};
+using MI_1e9 = ModInt<1000000007>;
+using MI_998 = ModInt<998244353>;
+using MI = MI_998;
 
 void init() {
 
 }
+
+struct DSU {
+    vector<int> p, sz;
+    DSU(int n) : p(n), sz(n) {
+        iota(p.begin(), p.end(), 0);
+    }
+    int find(int x) {
+        return p[x] == x ? x : p[x] = find(p[x]);
+    }
+    void unite(int u, int v) {
+        u = find(u), v = find(v);
+        if (u == v) return ;
+        if (sz[u] < sz[v]) swap(u, v);
+        sz[u] += sz[v];
+        p[v] = p[u];
+    }
+};
 
 void solve() {
 
@@ -38,8 +118,8 @@ signed main() {
     cin.tie(nullptr);
     init();
     int T = 1;
-    //cin >> T;
-    //cout << fixed << setprecision(15);
+    cin >> T;
+    cout << fixed << setprecision(15);
     while (T--) {
         solve();
         if (T) {
