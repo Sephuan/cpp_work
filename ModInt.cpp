@@ -124,7 +124,73 @@ using MI_1e9 = ModInt<1000000007>;
 using MI_998 = ModInt<998244353>;
 using MI = MI_998;
 
+-----------------------------------------
+-----------------------------------------
+__int128:
 
+
+template <int MOD>
+struct ModInt {
+    int v;
+
+    ModInt() : v(0) {}
+    ModInt(__int128 _v) {
+        v = static_cast<int>(_v % MOD);
+        if (v < 0) v += MOD;
+    }
+
+    ModInt power(long long p) const {
+        ModInt res = 1, base = *this;
+        while (p > 0) {
+            if (p & 1) res *= base;
+            base *= base;
+            p >>= 1;
+        }
+        return res;
+    }
+
+    ModInt inv() const { return power(MOD - 2); }
+
+    ModInt& operator+=(const ModInt& o) {
+        v += o.v;
+        if (v >= MOD) v -= MOD;
+        return *this;
+    }
+    ModInt& operator-=(const ModInt& o) {
+        v -= o.v;
+        if (v < 0) v += MOD;
+        return *this;
+    }
+    ModInt& operator*=(const ModInt& o) {
+        v = static_cast<int>(1LL * v * o.v % MOD);
+        return *this;
+    }
+    ModInt& operator/=(const ModInt& o) {
+        return *this *= o.inv();
+    }
+
+    friend ModInt operator+(ModInt a, const ModInt& b) { return a += b; }
+    friend ModInt operator-(ModInt a, const ModInt& b) { return a -= b; }
+    friend ModInt operator*(ModInt a, const ModInt& b) { return a *= b; }
+    friend ModInt operator/(ModInt a, const ModInt& b) { return a /= b; }
+
+    bool operator==(const ModInt& o) const { return v == o.v; }
+    bool operator!=(const ModInt& o) const { return v != o.v; }
+
+    friend istream& operator>>(istream& is, ModInt& x) {
+        long long val;
+        is >> val;
+        x = ModInt(val);
+        return is;
+    }
+    friend ostream& operator<<(ostream& os, const ModInt& x) {
+        return os << x.v;
+    }
+};
+
+using MI_1e9 = ModInt<1000000007>;
+using MI_998 = ModInt<998244353>;
+using MI = MI_998;
 
 ======================================================
 */
