@@ -113,7 +113,7 @@ void init() {
 }
 
 void solve() {
-    
+
 }
 
 signed main() {
@@ -121,7 +121,7 @@ signed main() {
     cin.tie(nullptr);
     init();
     int T = 1;
-    // cin >> T;
+    cin >> T;
     cout << fixed << setprecision(15);
     while (T--) {
         solve();

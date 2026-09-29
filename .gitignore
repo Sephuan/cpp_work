@@ -17,7 +17,10 @@
 .vscode/
 *.code-workspace
 
-# 5. 忽略常见的二进制/编译后缀
+# 5. 忽略常见的二进制/编译后缀与临时运行文件
 *.o
 *.exe
 *.out
+tempCodeRunnerFile*
+*.tmp
+
