@@ -19,10 +19,10 @@ class DSU:
     def unite(self, x, y) -> bool:
         rx, ry = self.find(x), self.find(y)
         if rx == ry: return False
-        if self.sz[rx] < self.sz[y]:
+        if self.sz[rx] < self.sz[ry]:
             rx, ry = ry, rx
         self.pa[ry] = rx
-        self.sz[rx] += self.sz[y]
+        self.sz[rx] += self.sz[ry]
         self.num -= 1
         return True
     def same(self, x, y) -> bool:
