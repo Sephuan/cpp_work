@@ -6,6 +6,7 @@ from bisect import *
 from math import *
 from heapq import *
 from functools import lru_cache
+from itertools import *
 input = sys.stdin.readline
 write = sys.stdout.write
 II = lambda : int(input().strip())
@@ -25,16 +26,11 @@ MOD, mod = 998_244_353, 10**9+7
 
 def sol():
     out = []
-    n, k = MI()
-    a, b = LMI(), LMI()
-    a.sort()
-    b.sort()
-    ans = min(a[n - k + i] + b[n - 1 - i] for i in range(k))
-    print(ans)
-    # write('\n'.join(out) + '\n')
+    
 
 if __name__ == '__main__':
     T = 1
-    # T = II()
+    T = II()
     for _ in range(T):
         sol()
+        # write('\n')
