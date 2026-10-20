@@ -25,7 +25,6 @@ MOD, mod = 998_244_353, 10**9+7
 
 # it = iter(sys.stdin.read().split())
 
-
 def sol():
     out = []
     n, s = MI()
